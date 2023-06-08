@@ -1,3 +1,19 @@
+
+Notes
+-----
+
+Differences from Alain Picard CSV parser:
+
+replaces notions of files with streams. Useful when CSV comes from things that are not files.
+
+Useful macros:
+- with-input-from-string 
+in case your CSV is already a string you can use that to make it a stream
+
+- with-open-file, alexandria:read-file-into-string, etc.
+
+Original readme:
+
 CSV parsing/writing utilities, a la Microsoft Excel.
 
 Author: Alain Picard <apicard@optushome.com.au>

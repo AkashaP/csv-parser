@@ -105,17 +105,16 @@
 
    *FIELD-SEPARATOR* and *QUOTE-CHARACTER* can be bound to
    modify what separates fields and delimits fields."
-  (with-open-stream (stream stream)
-    (loop repeat skip-lines
-          do (read-csv-line stream))
-    (if limit
-        (loop as line = (read-csv-line stream)
-              while line
-              repeat limit
-              do (funcall fn line))
-        (loop as line = (read-csv-line stream)
-              while line
-              do (funcall fn line)))))
+  (loop repeat skip-lines
+        do (read-csv-line stream))
+  (if limit
+      (loop as line = (read-csv-line stream)
+            while line
+            repeat limit
+            do (funcall fn line))
+      (loop as line = (read-csv-line stream)
+            while line
+            do (funcall fn line))))
 
 
 ;; Public
@@ -131,10 +130,9 @@
 
    *FIELD-SEPARATOR* and *QUOTE-CHARACTER* can be bound to
    modify what separates fields and delimits fields."
-  (let ((stream (gensym "STREAM"))
-	(count  (gensym "COUNT"))
+  (let ((count  (gensym "COUNT"))
 	(glimit (gensym "LIMIT")))
-    `(with-open-stream (,stream ,stream :direction :input)
+    `(progn
        (loop repeat ,skip-lines
              do     (read-csv-line ,stream))
        (loop for ,count upfrom 0
